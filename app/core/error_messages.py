@@ -1,4 +1,3 @@
-
 # Общие сообщения об ошибках для проектов и донатов
 OBJECT_NOT_FOUND = 'Объект {table_name} с указанным id не найден.'
 NO_SUCH_FIELD_IN_MODEL = (
@@ -26,6 +25,11 @@ NO_EMAIL_IN_PASSWORD = 'Password should not contain e-mail'
 EXISTING_USER = 'Пользователь {user} зарегистрирован.'
 
 # Сообщения об ошибках связанных с Google API
-PROJECTS_NUMBER_EXCEEDS_TABLE_CAPACITY = (
-    'Кол-во проектов превысило вместимость таблицы.'
+ROWS_NUMBER_EXCEEDS_SHEET_CAPACITY = (
+    'Выход за границы таблицы. Допустимо строк: {rows_capacity} '
+    'передано на вставку: {rows}'
+)
+COLOMNS_NUMBER_EXCEEDS_SHEET_CAPACITY = (
+    'Выход за границы таблицы. Допустимо столбцов: {colomns_capacity} '
+    'передано на вставку: {colomns}'
 )

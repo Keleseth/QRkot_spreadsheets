@@ -11,10 +11,10 @@ QRKot — это сервис для сбора пожертвований на 
 ## Установка
 Clone the repository and navigate to the project folder:
 ```bash
-git clone https://github.com/Keleseth/cat_charity_fund
+git clone https://github.com/Keleseth/QRkot_spreadsheets
 ```
 ```bash
-cd cat_charity_fund
+cd qrkot_spreadsheets
 ```
 ### FASTApi ожидает наличие файла .env в корневой папке проекта с 6 переменными:
 - APP_TITLE= Название приложения

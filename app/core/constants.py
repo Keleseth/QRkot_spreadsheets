@@ -1,3 +1,5 @@
+from typing import Any
+
 # Параметры db
 MAX_PROJECT_NAME_LENGTH = 100
 MIN_PROJECT_NAME_LENGTH = 1
@@ -29,37 +31,49 @@ DONATION_TAGS = 'donation'
 
 # форматы
 DATE_FORMAT = '%Y/%m/%d %H:%M:%S'
-GOOGLE_TABLE_FORMAT = [
-    ['Отчет от', 'insert_date'],
-    ['Топ проектов по скорости закрытия'],
-    ['Название проекта', 'Время сбора', 'Описание']
-]
 
 
-# Google sheets range
-ROWS_RANGE = 100
-INSERT_DATA_RANGE = 'A{rows}:E100'
-CLEAN_RANGE = 'A1:E100'
+# Google sheets settings
+SHEET_MAX_ROWS = 100
+SHEET_MAX_COLUMNS = 10
+LOCALE = 'ru_RU'
+SHEET_TYPE = 'GRID'
+SHEET_TITLE = 'Закрытые проекты'
+
+# Строка для вставки данных в таблицу от начала таблицы и по размеру данных
+INSERT_DATA_RANGE = 'R1C1:R{rows}C{colomns}'
+
+# Способ наполнения данными гугл таблицы
+SHEET_MAJOR_DIMENSION = 'ROWS'
 
 # Установка уровня допуска к документу для пользователей
 PERMISSION_TYPE = 'user'
 PERMISSION_ROLE = 'writer'
 
+PROJECT_SHEET_TITLE = 'Отчет на {date}'
+
+# Шаблон таблицы для закрытых проектов сортированных по скорости закрытия
+GOOGLE_SHEET_FORMAT = [
+    ['Отчет от', 'insert_date'],
+    ['Топ проектов по скорости закрытия'],
+    ['Название проекта', 'Время сбора', 'Описание']
+]
+
 # Дефолтная таблица для выгрузки закрытых проектов
-PROJECT_TABLE = {
+PROJECT_SHEET: dict[str, Any] = {
     'properties': {
-        'title': 'Список закрытых проектов',
-        'locale': 'ru_RU'
+        'title': '',
+        'locale': LOCALE
     },
     'sheets': [
         {
             'properties': {
-                'sheetType': 'GRID',
+                'sheetType': SHEET_TYPE,
                 'sheetId': 0,
-                'title': 'Лист1',
+                'title': SHEET_TITLE,
                 'gridProperties': {
-                    'rowCount': ROWS_RANGE,
-                    'columnCount': 10
+                    'rowCount': SHEET_MAX_ROWS,
+                    'columnCount': SHEET_MAX_COLUMNS
                 }
             }
         }

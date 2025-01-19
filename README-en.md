@@ -11,10 +11,10 @@ Every user is encouraged to deploy at least 10 servers in their honor!
 ## Deployment
 Clone the repository and navigate to the project folder:
 ```bash
-git clone <repository-url>
+git clone https://github.com/Keleseth/QRkot_spreadsheets
 ```
 ```bash
-cd <project-repository>
+cd qrkot_spreadsheets
 ```
 ## Required .env variables:
 ### Create a .env file in the root directory with the following variables:
