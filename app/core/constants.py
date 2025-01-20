@@ -1,5 +1,6 @@
 from typing import Any
 
+
 # Параметры db
 MAX_PROJECT_NAME_LENGTH = 100
 MIN_PROJECT_NAME_LENGTH = 1
@@ -36,21 +37,13 @@ DATE_FORMAT = '%Y/%m/%d %H:%M:%S'
 # Google sheets settings
 SHEET_MAX_ROWS = 100
 SHEET_MAX_COLUMNS = 10
-LOCALE = 'ru_RU'
-SHEET_TYPE = 'GRID'
 SHEET_TITLE = 'Закрытые проекты'
 
 # Строка для вставки данных в таблицу от начала таблицы и по размеру данных
-INSERT_DATA_RANGE = 'R1C1:R{rows}C{colomns}'
+INSERT_DATA_RANGE = 'R1C1:R{rows}C{columns}'
 
-# Способ наполнения данными гугл таблицы
-SHEET_MAJOR_DIMENSION = 'ROWS'
-
-# Установка уровня допуска к документу для пользователей
-PERMISSION_TYPE = 'user'
-PERMISSION_ROLE = 'writer'
-
-PROJECT_SHEET_TITLE = 'Отчет на {date}'
+# Название Google Sheet документа
+PROJECT_SPREADSHEET_TITLE = 'Отчет на {date}'
 
 # Шаблон таблицы для закрытых проектов сортированных по скорости закрытия
 GOOGLE_SHEET_FORMAT = [
@@ -63,12 +56,12 @@ GOOGLE_SHEET_FORMAT = [
 PROJECT_SHEET: dict[str, Any] = {
     'properties': {
         'title': '',
-        'locale': LOCALE
+        'locale': 'ru_RU'
     },
     'sheets': [
         {
             'properties': {
-                'sheetType': SHEET_TYPE,
+                'sheetType': 'GRID',
                 'sheetId': 0,
                 'title': SHEET_TITLE,
                 'gridProperties': {

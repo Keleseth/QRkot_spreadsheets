@@ -1,3 +1,9 @@
+from app.core.constants import (
+    SHEET_MAX_ROWS,
+    SHEET_MAX_COLUMNS
+)
+
+
 # Общие сообщения об ошибках для проектов и донатов
 OBJECT_NOT_FOUND = 'Объект {table_name} с указанным id не найден.'
 NO_SUCH_FIELD_IN_MODEL = (
@@ -26,10 +32,10 @@ EXISTING_USER = 'Пользователь {user} зарегистрирован.
 
 # Сообщения об ошибках связанных с Google API
 ROWS_NUMBER_EXCEEDS_SHEET_CAPACITY = (
-    'Выход за границы таблицы. Допустимо строк: {rows_capacity} '
+    f'Выход за границы таблицы. Допустимо строк: {SHEET_MAX_ROWS} '
     'передано на вставку: {rows}'
 )
-COLOMNS_NUMBER_EXCEEDS_SHEET_CAPACITY = (
-    'Выход за границы таблицы. Допустимо столбцов: {colomns_capacity} '
-    'передано на вставку: {colomns}'
+COLUMNS_NUMBER_EXCEEDS_SHEET_CAPACITY = (
+    f'Выход за границы таблицы. Допустимо столбцов: {SHEET_MAX_COLUMNS} '
+    'передано на вставку: {columns}'
 )

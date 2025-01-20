@@ -3,9 +3,30 @@ from datetime import datetime, timedelta
 
 from aiogoogle import Aiogoogle
 
-from app.api.validators.google_api_validators import validate_sheet_capacity
 from app.core import constants
 from app.core.config import settings
+from app.core.error_messages import (
+    COLUMNS_NUMBER_EXCEEDS_SHEET_CAPACITY,
+    ROWS_NUMBER_EXCEEDS_SHEET_CAPACITY
+)
+
+
+def validate_sheet_capacity(
+    rows_to_insert: int,
+    columns_to_insert: int
+) -> None:
+    if rows_to_insert > constants.SHEET_MAX_ROWS:
+        raise ValueError(
+            ROWS_NUMBER_EXCEEDS_SHEET_CAPACITY.format(
+                rows=rows_to_insert
+            )
+        )
+    if columns_to_insert > constants.SHEET_MAX_COLUMNS:
+        raise ValueError(
+            COLUMNS_NUMBER_EXCEEDS_SHEET_CAPACITY.format(
+                columns=columns_to_insert
+            )
+        )
 
 
 async def spreadsheets_create(
@@ -14,7 +35,7 @@ async def spreadsheets_create(
     service = await wrapper_services.discover('sheets', 'v4')
     spreadsheet_body = deepcopy(constants.PROJECT_SHEET)
     spreadsheet_body['properties']['title'] = (
-        constants.PROJECT_SHEET_TITLE.format(
+        constants.PROJECT_SPREADSHEET_TITLE.format(
             date=datetime.now().strftime(constants.DATE_FORMAT)
         )
     )
@@ -31,8 +52,8 @@ async def set_user_permissions(
         wrapper_services: Aiogoogle
 ) -> None:
     permissions_body = {
-        'type': constants.PERMISSION_TYPE,
-        'role': constants.PERMISSION_ROLE,
+        'type': 'user',
+        'role': 'writer',
         'emailAddress': settings.email
     }
     service = await wrapper_services.discover('drive', 'v3')
@@ -69,21 +90,21 @@ async def spreadsheets_update_value(
         )) for project in projects]
     ]
     update_body = {
-        'majorDimension': constants.SHEET_MAJOR_DIMENSION,
+        'majorDimension': 'ROWS',
         'values': sheet_values
     }
     rows_to_insert = len(sheet_values)
-    colomns_to_insert = max(len(row) for row in sheet_head)
+    columns_to_insert = max(map(len, sheet_values))
     validate_sheet_capacity(
         rows_to_insert=rows_to_insert,
-        columns_to_insert=colomns_to_insert
+        columns_to_insert=columns_to_insert
     )
     await wrapper_service.as_service_account(
         service.spreadsheets.values.update(
             spreadsheetId=spreadsheet_id,
             range=constants.INSERT_DATA_RANGE.format(
                 rows=rows_to_insert,
-                colomns=colomns_to_insert
+                columns=columns_to_insert
             ),
             valueInputOption='USER_ENTERED',
             json=update_body
